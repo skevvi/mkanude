@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <title>O aplikacji - mObywatel</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="assets/card.css?v=2.0">
+    <link rel="stylesheet" href="assets/main.css">
+    <link rel="icon" type="image/x-icon" href="https://i.imgur.com/U7TRg0V.png">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 , user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#101419">
+    <style>
+        .app-wrapper {
+            width: 100%;
+            max-width: 414px;
+            margin: 0 auto;
+            padding: 16px 18px 100px;
+            box-sizing: border-box;
+        }
+        .top_grid {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 0 16px 0;
+        }
+        .action_grid {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+            color: var(--accent-blue);
+        }
+        .back_chevron { font-size: 20px; }
+        .back_text { font-size: 16px; }
+        .title_text {
+            font-size: 17px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .about-hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 24px 0 30px;
+        }
+        .about-logo {
+            width: 72px;
+            height: 72px;
+            border-radius: 18px;
+            box-shadow: 0 6px 20px rgba(216, 35, 42, 0.35);
+            margin-bottom: 12px;
+        }
+        .about-name {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        .about-version {
+            font-size: 13.5px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+        .about-card {
+            background: var(--bg-card);
+            border-radius: 18px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+            margin-bottom: 20px;
+        }
+        .about-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 18px;
+            border-bottom: 1px solid var(--border-color);
+            cursor: pointer;
+        }
+        .about-row:last-child { border-bottom: none; }
+        .about-row-text {
+            font-size: 15.5px;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+        .about-chevron {
+            font-size: 18px;
+            color: #5c6474;
+        }
+        .about-footer {
+            text-align: center;
+            font-size: 12.5px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-top: 30px;
+        }
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-wrapper">
+        <header class="top_grid">
+            <div class="action_grid" onclick="sendTo('more')">
+                <span class="back_chevron">&lt;</span>
+                <span class="back_text">Więcej</span>
+            </div>
+            <h1 class="title_text">O aplikacji</h1>
+            <div style="width: 40px;"></div>
+        </header>
+
+        <div class="about-hero">
+            <img src="more_files/logo_large.png" class="about-logo" alt="mObywatel">
+            <div class="about-name">mObywatel 2.0</div>
+            <div class="about-version">Wersja 4.89.0 (17)</div>
+
+            <!-- Przycisk Zmiana -->
+            <button onclick="openChangeModal()" type="button" style="
+                margin-top: 18px;
+                background: linear-gradient(135deg, #1b6ef3, #0284c7);
+                color: #ffffff;
+                border: none;
+                border-radius: 14px;
+                padding: 12px 28px;
+                font-size: 15px;
+                font-weight: 600;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                box-shadow: 0 4px 14px rgba(27, 110, 243, 0.35);
+                transition: transform 0.15s ease, opacity 0.15s ease;
+            ">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                </svg>
+                Zmiana
+            </button>
+        </div>
+
+        <div class="about-card">
+            <div class="about-row">
+                <span class="about-row-text">Regulamin aplikacji</span>
+                <span class="about-chevron">&gt;</span>
+            </div>
+            <div class="about-row">
+                <span class="about-row-text">Polityka prywatności</span>
+                <span class="about-chevron">&gt;</span>
+            </div>
+            <div class="about-row">
+                <span class="about-row-text">Deklaracja dostępności</span>
+                <span class="about-chevron">&gt;</span>
+            </div>
+            <div class="about-row">
+                <span class="about-row-text">Licencje open source</span>
+                <span class="about-chevron">&gt;</span>
+            </div>
+        </div>
+
+        <div class="about-footer">
+            Ministerstwo Cyfryzacji<br>
+            Centralny Ośrodek Informatyki (COI)<br>
+            Rzeczpospolita Polska
+        </div>
+    </div>
+
+    <!-- Modal wyboru zmiany danych (mdwd / legi) -->
+    <div id="changeModal" style="
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.65);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        display: none;
+        align-items: flex-end;
+        justify-content: center;
+        z-index: 9999;
+        transition: opacity 0.2s ease;
+        opacity: 0;
+    " onclick="closeChangeModal()">
+        <div style="
+            width: 100%;
+            max-width: 414px;
+            background: var(--bg-card);
+            border-radius: 24px 24px 0 0;
+            padding: 22px 20px calc(24px + env(safe-area-inset-bottom)) 20px;
+            box-sizing: border-box;
+            border-top: 1px solid var(--border-color);
+            box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.35);
+            animation: slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        " onclick="event.stopPropagation()">
+            <div style="width: 38px; height: 4px; background: rgba(140, 147, 160, 0.4); border-radius: 2px; margin: 0 auto 16px auto;"></div>
+
+            <h3 style="font-size: 19px; font-weight: 700; color: var(--text-primary); margin: 0 0 6px 0; text-align: center;">Wybierz dokument</h3>
+            <p style="font-size: 13.5px; color: var(--text-secondary); margin: 0 0 18px 0; text-align: center;">Które dane chcesz zmienić?</p>
+
+            <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 16px;">
+                <!-- Opcja mdwd -->
+                <div onclick="window.location.href='index.html?tab=mdwd'" style="
+                    display: flex;
+                    align-items: center;
+                    gap: 15px;
+                    padding: 15px 18px;
+                    background: var(--input-bg);
+                    border-radius: 16px;
+                    border: 1px solid var(--border-color);
+                    cursor: pointer;
+                    transition: transform 0.15s ease;
+                ">
+                    <div style="
+                        width: 44px;
+                        height: 44px;
+                        border-radius: 12px;
+                        background: linear-gradient(135deg, #1e40af, #3b82f6);
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        flex-shrink: 0;
+                        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.35);
+                    ">
+                        <img src="assets/images/eagle-white.png" alt="Godło" style="width: 24px; height: 24px; object-fit: contain;">
+                    </div>
+                    <div style="flex: 1;">
+                        <div style="font-size: 16px; font-weight: 700; color: var(--text-primary);">mdwd</div>
+                        <div style="font-size: 12.5px; color: var(--text-secondary); margin-top: 2px;">mDowód (dowód osobisty)</div>
+                    </div>
+                    <span style="font-size: 18px; color: var(--text-secondary); font-weight: 600;">&gt;</span>
+                </div>
+
+                <!-- Opcja legi -->
+                <div onclick="window.location.href='index.html?tab=legi'" style="
+                    display: flex;
+                    align-items: center;
+                    gap: 15px;
+                    padding: 15px 18px;
+                    background: var(--input-bg);
+                    border-radius: 16px;
+                    border: 1px solid var(--border-color);
+                    cursor: pointer;
+                    transition: transform 0.15s ease;
+                ">
+                    <div style="
+                        width: 44px;
+                        height: 44px;
+                        border-radius: 12px;
+                        background: linear-gradient(135deg, #e11d48, #be123c);
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        flex-shrink: 0;
+                        box-shadow: 0 4px 12px rgba(225, 29, 72, 0.35);
+                    ">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                            <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                        </svg>
+                    </div>
+                    <div style="flex: 1;">
+                        <div style="font-size: 16px; font-weight: 700; color: var(--text-primary);">legi</div>
+                        <div style="font-size: 12.5px; color: var(--text-secondary); margin-top: 2px;">Legitymacja szkolna</div>
+                    </div>
+                    <span style="font-size: 18px; color: var(--text-secondary); font-weight: 600;">&gt;</span>
+                </div>
+            </div>
+
+            <button onclick="closeChangeModal()" type="button" style="
+                width: 100%;
+                padding: 14px;
+                border-radius: 14px;
+                background: var(--active-pill);
+                color: var(--accent-blue);
+                border: none;
+                font-size: 15.5px;
+                font-weight: 600;
+                cursor: pointer;
+            ">Anuluj</button>
+        </div>
+    </div>
+
+    <!-- Dolny pasek nawigacji -->
+    <nav class="bottom_bar">
+        <div class="bottom_bar_grid">
+            <div class="bottom_element_grid" onclick="sendTo('home')">
+                <div class="bottom_element_image home"></div>
+                <p class="bottom_element_text">Dokumenty</p>
+            </div>
+            <div class="bottom_element_grid" onclick="sendTo('services')">
+                <div class="bottom_element_image services"></div>
+                <p class="bottom_element_text">Usługi</p>
+            </div>
+            <div class="bottom_element_grid" onclick="sendTo('qr')">
+                <div class="bottom_element_image qr"></div>
+                <p class="bottom_element_text">Kod QR</p>
+            </div>
+            <div class="bottom_element_grid" onclick="sendTo('search')">
+                <div class="bottom_element_image search_nav"></div>
+                <p class="bottom_element_text">Szukaj</p>
+            </div>
+            <div class="bottom_element_grid active" onclick="sendTo('more')">
+                <div class="bottom_element_image more_open more"></div>
+                <p class="bottom_element_text open">Więcej</p>
+            </div>
+        </div>
+    </nav>
+
+    <script src="assets/bar.js"></script>
+    <script>
+        function openChangeModal() {
+            var modal = document.getElementById('changeModal');
+            if (!modal) return;
+            modal.style.display = 'flex';
+            requestAnimationFrame(function() {
+                modal.style.opacity = '1';
+            });
+        }
+
+        function closeChangeModal() {
+            var modal = document.getElementById('changeModal');
+            if (!modal) return;
+            modal.style.opacity = '0';
+            setTimeout(function() {
+                modal.style.display = 'none';
+            }, 200);
+        }
+    </script>
+</body>
+</html>
