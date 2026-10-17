@@ -225,7 +225,13 @@
                 if (s) {
                     let list = JSON.parse(s);
                     if (Array.isArray(list)) {
-                        return list.map(id => (id === 'Legitymacja szkolna') ? 'school' : id);
+                        const normalized = list.map(id => (id === 'siema' || id === 'Legitymacja szkolna') ? 'school' : id);
+                        const unique = [...new Set(normalized)];
+                        // Zapisz znormalizowane dane z powrotem
+                        if (JSON.stringify(unique) !== JSON.stringify(list)) {
+                            localStorage.setItem('mobywatel_selected_docs', JSON.stringify(unique));
+                        }
+                        return unique;
                     }
                 }
             } catch (e) { }

@@ -348,7 +348,7 @@
                     const parsed = JSON.parse(s);
                     if (Array.isArray(parsed) && parsed.length > 0) {
                         // Normalizuj stare ID na 'school'
-                        selected = parsed.map(id => (id === 'Legitymacja szkolna') ? 'school' : id);
+                        selected = parsed.map(id => (id === 'siema' || id === 'Legitymacja szkolna') ? 'school' : id);
                         selected = [...new Set(selected)];
                         localStorage.setItem('mobywatel_selected_docs', JSON.stringify(selected));
                     }
