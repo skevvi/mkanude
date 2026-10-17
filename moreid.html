@@ -225,11 +225,11 @@
         }
 
         function applyMoreIdData(data) {
-            // Seria i numer dowodu osobistego
-            const seriesVal = cleanVal(data.id_series || data.seriesAndNumber, 'ZZC 108201');
-            const issuerVal = cleanVal(data.id_issuer || data.issuer || data.organ_wydajacy, 'PREZYDENT M.ST. WARSZAWY');
-            const expiryVal = cleanVal(data.id_expiry_date || data.expiry_date || data.expiryDate, '11.09.2032');
-            const issueVal = cleanVal(data.id_issue_date || data.issue_date || data.givenDate, '11.09.2022');
+            // Seria i numer: dokładnie taka sama jak w card.html (mdow_series)
+            const seriesVal = cleanVal(data.mdow_series || data.seriesAndNumber || data.id_series, 'BRAK DANYCH');
+            const issuerVal = cleanVal(data.id_issuer || data.issuer || data.organ_wydajacy, 'URZĄD MIASTA WARSZAWA');
+            const expiryVal = cleanVal(data.expiry_date || data.id_expiry_date || data.expiryDate, '11.09.2032');
+            const issueVal = cleanVal(data.issue_date || data.id_issue_date || data.givenDate, '11.09.2022');
 
             if (document.getElementById('id_series_value')) {
                 document.getElementById('id_series_value').textContent = seriesVal;
@@ -270,6 +270,10 @@
                     data = Object.assign({}, parsed, data);
                 } catch(e) {}
             }
+
+            if (!data.mdow_series && localStorage.getItem('mdow_series')) data.mdow_series = localStorage.getItem('mdow_series');
+            if (!data.mdow_series && localStorage.getItem('seriesAndNumber')) data.mdow_series = localStorage.getItem('seriesAndNumber');
+            if (!data.id_issuer && localStorage.getItem('id_issuer')) data.id_issuer = localStorage.getItem('id_issuer');
 
             // 3. Sprawdź IndexedDB 'fobywatel' jeśli nadal brak
             try {

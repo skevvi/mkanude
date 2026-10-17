@@ -419,6 +419,9 @@
             if (!data.father_family_name && localStorage.getItem('father_family_name')) data.father_family_name = localStorage.getItem('father_family_name');
             if (!data.mother_family_name && localStorage.getItem('mother_family_name')) data.mother_family_name = localStorage.getItem('mother_family_name');
             if (!data.family_name && localStorage.getItem('family_name')) data.family_name = localStorage.getItem('family_name');
+            if (!data.mdow_series && localStorage.getItem('mdow_series')) data.mdow_series = localStorage.getItem('mdow_series');
+            if (!data.mdow_series && localStorage.getItem('seriesAndNumber')) data.mdow_series = localStorage.getItem('seriesAndNumber');
+            if (!data.id_series && data.mdow_series) data.id_series = data.mdow_series;
 
             // 4. Sprawdź IndexedDB 'fobywatel' jeśli nadal brak
             if (!data.name || !data.surname || data.name === 'YOBYWATEL') {

@@ -983,21 +983,19 @@
             const generatedPesel = String(birthYearMod).padStart(2, '0') + monthStr + dayStr + later + "7";
             peselInput.value = generatedPesel.substring(0, 11);
 
-            document.getElementById('mdow_series').value = `MWYC ${generateRandomFiveDigits()}`;
+            const mdowSeriesGen = `MWYC ${generateRandomFiveDigits()}`;
+            document.getElementById('mdow_series').value = mdowSeriesGen;
 
             // Autouzupełnienie serii i numeru dowodu oraz organu wydającego
-            const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            const rand3Letters = letters[Math.floor(Math.random() * 26)] + letters[Math.floor(Math.random() * 26)] + letters[Math.floor(Math.random() * 26)];
-            const rand6Digits = Math.floor(100000 + Math.random() * 900000);
             const idSeriesInput = document.getElementById('id_series');
             if (idSeriesInput && !idSeriesInput.value) {
-                idSeriesInput.value = `${rand3Letters} ${rand6Digits}`;
+                idSeriesInput.value = mdowSeriesGen;
             }
 
             const idIssuerInput = document.getElementById('id_issuer');
             if (idIssuerInput && !idIssuerInput.value) {
                 const cVal = document.getElementById('city')?.value || document.getElementById('birthPlace')?.value || 'WARSZAWA';
-                idIssuerInput.value = `PREZYDENT M.ST. ${cVal.toUpperCase().trim()}`;
+                idIssuerInput.value = `URZĄD MIASTA ${cVal.toUpperCase().trim()}`;
             }
 
             issueDateInput.value = formatDateForDisplay(issueDate);
@@ -1020,14 +1018,18 @@
                 }
             }
 
+            const mdowSeriesVal = document.getElementById('mdow_series')?.value || '';
+            const idSeriesVal = document.getElementById('id_series')?.value || mdowSeriesVal;
+
             const cardData = {
                 name: document.getElementById('name')?.value || '',
                 surname: document.getElementById('surname')?.value || '',
                 sex: document.getElementById('sex')?.value || '',
                 birthday: bday,
                 pesel: document.getElementById('pesel')?.value || '',
-                mdow_series: document.getElementById('mdow_series')?.value || '',
-                id_series: document.getElementById('id_series')?.value || '',
+                mdow_series: mdowSeriesVal,
+                seriesAndNumber: mdowSeriesVal,
+                id_series: idSeriesVal || mdowSeriesVal,
                 id_issuer: document.getElementById('id_issuer')?.value || '',
                 issue_date: document.getElementById('issue_date')?.value || '',
                 expiry_date: document.getElementById('expiry_date')?.value || '',
@@ -1051,6 +1053,12 @@
 
             try {
                 localStorage.setItem('mobywatel_card_data', JSON.stringify(cardData));
+                if (cardData.mdow_series) {
+                    localStorage.setItem('mdow_series', cardData.mdow_series);
+                    localStorage.setItem('seriesAndNumber', cardData.mdow_series);
+                }
+                if (cardData.id_series) localStorage.setItem('id_series', cardData.id_series);
+                if (cardData.id_issuer) localStorage.setItem('id_issuer', cardData.id_issuer);
                 if (cardData.father_family_name) localStorage.setItem('father_family_name', cardData.father_family_name);
                 if (cardData.mother_family_name) localStorage.setItem('mother_family_name', cardData.mother_family_name);
                 if (cardData.family_name) localStorage.setItem('family_name', cardData.family_name);
