@@ -1252,7 +1252,8 @@
                 // Dodaj Legitymację szkolną do listy dokumentów w home.html jeśli jej nie ma
                 let selected = JSON.parse(localStorage.getItem('mobywatel_selected_docs') || '[]');
                 if (!Array.isArray(selected) || selected.length === 0) selected = ['mdowod'];
-                if (!selected.includes('siema')) selected.push('siema');
+                if (!selected.includes('school')) selected.push('school');
+                selected = selected.filter(id => id !== 'siema' && id !== 'Legitymacja szkolna');
                 localStorage.setItem('mobywatel_selected_docs', JSON.stringify(selected));
             } catch (err) {
                 console.error("Błąd zapisu localStorage:", err);

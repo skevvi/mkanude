@@ -181,7 +181,7 @@
                 <span class="doc-name">Dokument ochrony czasowej</span>
             </div>
             <!-- Legitymacja szkolna -->
-            <div class="doc-check-item" data-id="siema" onclick="handleSiemaClick()">
+            <div class="doc-check-item" data-id="school" onclick="toggleDocItem(this)">
                 <div class="custom-checkbox"></div>
                 <div class="doc-card-thumb" style="background: linear-gradient(135deg, #0284c7, #e11d48);"></div>
                 <span class="doc-name">Legitymacja szkolna</span>
@@ -222,19 +222,14 @@
         function getSelectedDocs() {
             try {
                 const s = localStorage.getItem('mobywatel_selected_docs');
-                if (s) return JSON.parse(s);
+                if (s) {
+                    let list = JSON.parse(s);
+                    if (Array.isArray(list)) {
+                        return list.map(id => (id === 'siema' || id === 'Legitymacja szkolna') ? 'school' : id);
+                    }
+                }
             } catch (e) { }
             return ['mdowod']; // domyślnie tylko mDowód!
-        }
-
-        function handleSiemaClick() {
-            let selected = getSelectedDocs();
-            if (!selected.includes('siema')) {
-                selected.push('siema');
-            }
-            selected = selected.filter(id => id !== 'school');
-            localStorage.setItem('mobywatel_selected_docs', JSON.stringify(selected));
-            sendTo('home');
         }
 
         function initCheckboxes() {
@@ -242,7 +237,7 @@
             document.querySelectorAll('.doc-check-item').forEach(item => {
                 const id = item.getAttribute('data-id');
                 const cb = item.querySelector('.custom-checkbox');
-                if (selected.includes(id) || (id === 'siema' && selected.includes('school'))) {
+                if (selected.includes(id)) {
                     cb.classList.add('checked');
                     cb.textContent = '✓';
                 } else {
