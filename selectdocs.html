@@ -133,7 +133,9 @@
     <div class="selectdocs-wrapper">
         <header class="top_grid">
             <div class="action_grid" onclick="sendTo('home')">
-                <span class="back_chevron">&lt;</span>
+                <svg class="back_chevron" width="12" height="21" viewBox="0 0 12 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 2.5L2 10.5L10 18.5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
                 <span class="back_text">Wróć</span>
             </div>
             <h1 class="title_text" style="font-size: 16px;">Wybierz dokumenty</h1>
@@ -178,11 +180,11 @@
                 <div class="doc-card-thumb" style="background: linear-gradient(135deg, #0284c7, #eab308);"></div>
                 <span class="doc-name">Dokument ochrony czasowej</span>
             </div>
-            <!-- siema -->
+            <!-- Legitymacja szkolna -->
             <div class="doc-check-item" data-id="siema" onclick="handleSiemaClick()">
                 <div class="custom-checkbox"></div>
                 <div class="doc-card-thumb" style="background: linear-gradient(135deg, #0284c7, #e11d48);"></div>
-                <span class="doc-name">siema</span>
+                <span class="doc-name">Legitymacja szkolna</span>
             </div>
             <!-- Legitymacja inżyniera budownictwa -->
             <div class="doc-check-item" data-id="builder" onclick="toggleDocItem(this)">

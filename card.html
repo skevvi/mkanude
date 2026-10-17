@@ -3,7 +3,7 @@
 <head>
     <title>mObywatel</title>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="assets/card.css?v=3.0">
+    <link rel="stylesheet" href="assets/card.css?v=3.1">
     <link rel="stylesheet" href="assets/main.css">
     <link rel="icon" type="image/x-icon" href="https://i.imgur.com/U7TRg0V.png">
     <link rel="apple-touch-icon" href="https://i.imgur.com/U7TRg0V.png">
@@ -25,7 +25,9 @@
         <!-- Pasek górny iOS -->
         <header class="top_grid">
             <div class="action_grid" onclick="sendTo('home')">
-                <span class="back_chevron">&lt;</span>
+                <svg class="back_chevron" width="12" height="21" viewBox="0 0 12 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 2.5L2 10.5L10 18.5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
                 <span class="back_text">Wróć</span>
             </div>
             <h1 class="title_text">mDowód</h1>
@@ -341,8 +343,18 @@
                 else s = cleanVal(s);
                 document.getElementById('sex').textContent = s;
             }
-            if (document.getElementById('fathersFamilyName')) document.getElementById('fathersFamilyName').textContent = cleanVal(finalData.fathersFamilyName || finalData.father_family_name);
-            if (document.getElementById('mothersFamilyName')) document.getElementById('mothersFamilyName').textContent = cleanVal(finalData.mothersFamilyName || finalData.mother_family_name);
+            if (document.getElementById('fathersFamilyName')) {
+                const fFamText = (finalData.father_family_name && finalData.father_family_name !== 'BRAK DANYCH')
+                    ? finalData.father_family_name
+                    : ((finalData.fathersFamilyName && finalData.fathersFamilyName !== 'BRAK DANYCH') ? finalData.fathersFamilyName : 'BRAK DANYCH');
+                document.getElementById('fathersFamilyName').textContent = cleanVal(fFamText);
+            }
+            if (document.getElementById('mothersFamilyName')) {
+                const mFamText = (finalData.mother_family_name && finalData.mother_family_name !== 'BRAK DANYCH')
+                    ? finalData.mother_family_name
+                    : ((finalData.mothersFamilyName && finalData.mothersFamilyName !== 'BRAK DANYCH') ? finalData.mothersFamilyName : 'BRAK DANYCH');
+                document.getElementById('mothersFamilyName').textContent = cleanVal(mFamText);
+            }
             if (document.getElementById('birthPlace')) document.getElementById('birthPlace').textContent = cleanVal(finalData.birthPlace);
             if (document.getElementById('countryOfBirth')) document.getElementById('countryOfBirth').textContent = finalData.countryOfBirth || finalData.birth_country || 'Polska';
             if (document.getElementById('homeDate')) document.getElementById('homeDate').textContent = cleanVal(finalData.home_date);
@@ -404,6 +416,9 @@
             if (!data.pesel && localStorage.getItem('pesel')) data.pesel = localStorage.getItem('pesel');
             if (!data.birthday && localStorage.getItem('birthDay')) data.birthday = localStorage.getItem('birthDay');
             if (!data.photoUrl && localStorage.getItem('image')) data.photoUrl = localStorage.getItem('image');
+            if (!data.father_family_name && localStorage.getItem('father_family_name')) data.father_family_name = localStorage.getItem('father_family_name');
+            if (!data.mother_family_name && localStorage.getItem('mother_family_name')) data.mother_family_name = localStorage.getItem('mother_family_name');
+            if (!data.family_name && localStorage.getItem('family_name')) data.family_name = localStorage.getItem('family_name');
 
             // 4. Sprawdź IndexedDB 'fobywatel' jeśli nadal brak
             if (!data.name || !data.surname || data.name === 'YOBYWATEL') {
@@ -433,6 +448,23 @@
                 } catch(e) {}
             }
 
+            // Normalizacja nazwisk rodowych przed nałożeniem wartości domyślnych
+            const curFatherFam = data.father_family_name || data.fathersFamilyName;
+            if (curFatherFam && curFatherFam !== 'BRAK DANYCH') {
+                data.father_family_name = curFatherFam;
+                data.fathersFamilyName = curFatherFam;
+            }
+            const curMotherFam = data.mother_family_name || data.mothersFamilyName;
+            if (curMotherFam && curMotherFam !== 'BRAK DANYCH') {
+                data.mother_family_name = curMotherFam;
+                data.mothersFamilyName = curMotherFam;
+            }
+            const curFam = data.family_name || data.familyName;
+            if (curFam && curFam !== 'BRAK DANYCH') {
+                data.family_name = curFam;
+                data.familyName = curFam;
+            }
+
             // Domyślne wartości: BRAK DANYCH jeśli brak konfiguracji (zgodnie ze screenami użytkownika 1:1)
             const defaults = {
                 name: 'BRAK DANYCH',
@@ -441,12 +473,17 @@
                 birthday: 'BRAK DANYCH',
                 pesel: 'BRAK DANYCH',
                 mdow_series: 'BRAK DANYCH',
+                id_series: 'ZZC 108201',
+                id_issuer: 'URZĄD MIASTA WARSZAWA',
                 expiry_date: 'BRAK DANYCH',
                 issue_date: 'BRAK DANYCH',
                 father_name: 'BRAK DANYCH',
                 mother_name: 'BRAK DANYCH',
                 family_name: 'BRAK DANYCH',
+                familyName: 'BRAK DANYCH',
                 sex: 'BRAK DANYCH',
+                father_family_name: 'BRAK DANYCH',
+                mother_family_name: 'BRAK DANYCH',
                 fathersFamilyName: 'BRAK DANYCH',
                 mothersFamilyName: 'BRAK DANYCH',
                 birthPlace: 'BRAK DANYCH',

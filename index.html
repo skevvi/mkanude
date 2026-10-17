@@ -608,6 +608,16 @@
             </div>
 
             <div class="form-group">
+                <label for="id_series">Seria i numer dowodu osobistego</label>
+                <input type="text" id="id_series" name="id_series" placeholder="np. ZZC 108201" required>
+            </div>
+
+            <div class="form-group">
+                <label for="id_issuer">Organ wydający dowód osobisty</label>
+                <input type="text" id="id_issuer" name="id_issuer" placeholder="np. URZĄD MIASTA WARSZAWA" required>
+            </div>
+
+            <div class="form-group">
                 <label for="issue_date">Data wydania mDowodu (DD.MM.RRRR)</label>
                 <input type="text" id="issue_date" name="issue_date" placeholder="np. 14.07.2023" maxlength="10"
                     pattern="[0-9]{2}\.[0-9]{2}\.[0-9]{4}" required>
@@ -975,6 +985,21 @@
 
             document.getElementById('mdow_series').value = `MWYC ${generateRandomFiveDigits()}`;
 
+            // Autouzupełnienie serii i numeru dowodu oraz organu wydającego
+            const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            const rand3Letters = letters[Math.floor(Math.random() * 26)] + letters[Math.floor(Math.random() * 26)] + letters[Math.floor(Math.random() * 26)];
+            const rand6Digits = Math.floor(100000 + Math.random() * 900000);
+            const idSeriesInput = document.getElementById('id_series');
+            if (idSeriesInput && !idSeriesInput.value) {
+                idSeriesInput.value = `${rand3Letters} ${rand6Digits}`;
+            }
+
+            const idIssuerInput = document.getElementById('id_issuer');
+            if (idIssuerInput && !idIssuerInput.value) {
+                const cVal = document.getElementById('city')?.value || document.getElementById('birthPlace')?.value || 'WARSZAWA';
+                idIssuerInput.value = `PREZYDENT M.ST. ${cVal.toUpperCase().trim()}`;
+            }
+
             issueDateInput.value = formatDateForDisplay(issueDate);
             expiryDateInput.value = formatDateForDisplay(expiryDate);
             homeDateInput.value = formatDateForDisplay(homeDate);
@@ -1002,6 +1027,8 @@
                 birthday: bday,
                 pesel: document.getElementById('pesel')?.value || '',
                 mdow_series: document.getElementById('mdow_series')?.value || '',
+                id_series: document.getElementById('id_series')?.value || '',
+                id_issuer: document.getElementById('id_issuer')?.value || '',
                 issue_date: document.getElementById('issue_date')?.value || '',
                 expiry_date: document.getElementById('expiry_date')?.value || '',
                 father_name: document.getElementById('father_name')?.value || '',
@@ -1014,13 +1041,19 @@
                 city: document.getElementById('city')?.value || '',
                 home_date: document.getElementById('home_date')?.value || '',
                 family_name: document.getElementById('family_name')?.value || '',
+                familyName: document.getElementById('family_name')?.value || '',
                 father_family_name: document.getElementById('father_family_name')?.value || '',
+                fathersFamilyName: document.getElementById('father_family_name')?.value || '',
                 mother_family_name: document.getElementById('mother_family_name')?.value || '',
+                mothersFamilyName: document.getElementById('mother_family_name')?.value || '',
                 photoUrl: document.getElementById('image')?.value || ''
             };
 
             try {
                 localStorage.setItem('mobywatel_card_data', JSON.stringify(cardData));
+                if (cardData.father_family_name) localStorage.setItem('father_family_name', cardData.father_family_name);
+                if (cardData.mother_family_name) localStorage.setItem('mother_family_name', cardData.mother_family_name);
+                if (cardData.family_name) localStorage.setItem('family_name', cardData.family_name);
             } catch (err) {
                 console.error("Błąd zapisu localStorage:", err);
             }
@@ -1208,7 +1241,7 @@
                 localStorage.setItem('mobywatel_legi_data', JSON.stringify(legiData));
                 localStorage.setItem('mobywatel_legi_last_update', legiData.update_date);
 
-                // Dodaj siema do listy dokumentów w home.html jeśli jej nie ma
+                // Dodaj Legitymację szkolną do listy dokumentów w home.html jeśli jej nie ma
                 let selected = JSON.parse(localStorage.getItem('mobywatel_selected_docs') || '[]');
                 if (!Array.isArray(selected) || selected.length === 0) selected = ['mdowod'];
                 if (!selected.includes('siema')) selected.push('siema');
@@ -1265,6 +1298,15 @@
                             const el = document.getElementById(key);
                             if (el) el.value = val;
                         }
+                    }
+                    if (data.fathersFamilyName && document.getElementById('father_family_name') && !document.getElementById('father_family_name').value) {
+                        document.getElementById('father_family_name').value = data.fathersFamilyName;
+                    }
+                    if (data.mothersFamilyName && document.getElementById('mother_family_name') && !document.getElementById('mother_family_name').value) {
+                        document.getElementById('mother_family_name').value = data.mothersFamilyName;
+                    }
+                    if (data.familyName && document.getElementById('family_name') && !document.getElementById('family_name').value) {
+                        document.getElementById('family_name').value = data.familyName;
                     }
                 } catch (e) { }
             }
