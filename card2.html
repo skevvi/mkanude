@@ -410,7 +410,7 @@
             if (confirm("Czy na pewno chcesz usunąć legitymację?")) {
                 try {
                     let selected = JSON.parse(localStorage.getItem('mobywatel_selected_docs') || '[]');
-                    selected = selected.filter(id => id !== 'siema' && id !== 'school' && id !== 'Legitymacja szkolna');
+                    selected = selected.filter(id => id !== 'school' && id !== 'Legitymacja szkolna');
                     if (selected.length === 0) selected.push('mdowod');
                     localStorage.setItem('mobywatel_selected_docs', JSON.stringify(selected));
                 } catch (e) { }

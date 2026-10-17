@@ -314,18 +314,6 @@
                 url: 'card2.html',
                 badge: '<img src="assets/images/eagle-white.png" alt="Godło">'
             },
-            'siema': {
-                name: 'Legitymacja szkolna',
-                bg: 'linear-gradient(135deg, #0284c7, #e11d48)',
-                url: 'card2.html',
-                badge: '<img src="assets/images/eagle-white.png" alt="Godło">'
-            },
-            'Legitymacja szkolna': {
-                name: 'Legitymacja szkolna',
-                bg: 'linear-gradient(135deg, #0284c7, #e11d48)',
-                url: 'card2.html',
-                badge: '<img src="assets/images/eagle-white.png" alt="Godło">'
-            },
             'builder': {
                 name: 'Legitymacja inżyniera budownictwa',
                 bg: 'linear-gradient(135deg, #a83232, #4a154b)',
@@ -359,8 +347,8 @@
                 if (s) {
                     const parsed = JSON.parse(s);
                     if (Array.isArray(parsed) && parsed.length > 0) {
-                        // Normalizuj 'siema' i 'Legitymacja szkolna' na 'school'
-                        selected = parsed.map(id => (id === 'siema' || id === 'Legitymacja szkolna') ? 'school' : id);
+                        // Normalizuj stare ID na 'school'
+                        selected = parsed.map(id => (id === 'Legitymacja szkolna') ? 'school' : id);
                         selected = [...new Set(selected)];
                         localStorage.setItem('mobywatel_selected_docs', JSON.stringify(selected));
                     }
