@@ -27,9 +27,9 @@ body {
 
 /* Pasek górny */
 .top_grid {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
-    justify-content: space-between;
     padding: 14px 16px;
     background-color: var(--bg-main, #101419);
     position: sticky;
@@ -39,22 +39,55 @@ body {
 }
 
 .action_grid {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: 4px;
     cursor: pointer;
     color: var(--accent-blue, #388af6);
+    justify-self: start;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    -webkit-user-select: none;
+    transition: opacity 0.15s ease;
+}
+
+.action_grid:active {
+    opacity: 0.5;
 }
 
 .back_chevron {
-    font-size: 22px;
-    line-height: 1;
-    font-weight: 300;
+    width: 12px;
+    height: 21px;
+    display: inline-block;
+    vertical-align: middle;
+    flex-shrink: 0;
+}
+
+span.back_chevron {
+    font-size: 0 !important;
+    line-height: 0 !important;
+    color: transparent !important;
+    width: 12px;
+    height: 21px;
+    display: inline-block;
+    background-color: currentColor;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 21'%3E%3Cpath d='M10 2.5L2 10.5L10 18.5' fill='none' stroke='black' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat center / contain;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 21'%3E%3Cpath d='M10 2.5L2 10.5L10 18.5' fill='none' stroke='black' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat center / contain;
+}
+
+svg.back_chevron {
+    display: inline-block;
+    width: 12px;
+    height: 21px;
+    stroke: currentColor;
 }
 
 .back_text {
     font-size: 17px;
     font-weight: 400;
+    line-height: 22px;
+    letter-spacing: -0.4px;
+    color: inherit;
 }
 
 .title_text {
@@ -62,6 +95,10 @@ body {
     font-weight: 600;
     color: var(--text-primary, #ffffff);
     letter-spacing: -0.3px;
+    text-align: center;
+    white-space: nowrap;
+    margin: 0;
+    justify-self: center;
 }
 
 .help_icon_btn {
@@ -76,6 +113,7 @@ body {
     font-weight: 600;
     color: var(--text-secondary, #8c93a0);
     cursor: pointer;
+    justify-self: end;
 }
 
 /* Zegar */
